@@ -64,7 +64,7 @@ BuildRequires: bash-completion
 Summary: RPM package installer/updater/manager
 Name: yum
 Version: 3.4.3
-Release: 0
+Release: 500
 License: GPLv2+
 Group: System Environment/Base
 Source: %{name}-%{version}.tar.gz
@@ -101,6 +101,10 @@ Requires: pyxattr
 # Suggests, needed for yum fs diff
 Requires: diffutils
 Requires: cpio
+
+# Replace Yum With DNF F22 Change
+Requires: dnf-yum
+Requires: dnf-plugins-extras-migrate
 
 Conflicts: rpm >= 5-0
 # Zif is a re-implementation of yum in C, however:
@@ -429,7 +433,7 @@ exit 0
 %if %{yum_updatesd}
 %exclude %{_datadir}/yum-cli/yumupd.py*
 %endif
-%{_bindir}/yum
+%{_bindir}/yum-deprecated
 %{python_sitelib}/yum
 %{python_sitelib}/rpmUtils
 %dir /var/cache/yum
@@ -438,7 +442,8 @@ exit 0
 %ghost /var/lib/yum/history
 %ghost /var/lib/yum/plugins
 %ghost /var/lib/yum/yumdb
-%{_mandir}/man*/yum.*
+%{_mandir}/man*/yum.conf.5
+%{_mandir}/man*/yum-deprecated.8
 %{_mandir}/man*/yum-shell*
 # plugin stuff
 %dir %{_sysconfdir}/yum/pluginconf.d 
